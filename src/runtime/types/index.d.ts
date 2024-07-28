@@ -1,3 +1,5 @@
 export * from './fadeIn'
 export * from './galleryItem'
-export * from './writeTextSection'
+export * from './writeText'
+export * from './textTyper'
+export * from './gallery'

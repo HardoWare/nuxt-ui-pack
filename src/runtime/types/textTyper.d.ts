@@ -1,7 +1,8 @@
-import type { WriteTextSectionType } from './writeTextSection'
+import type { WriteTextType } from './writeText'
 
-export type TextTyperType = {
-  items: WriteTextSectionType[]
-  eraseDelay: number
-  nextDelay: number
+export interface TextTyperType {
+  items: WriteTextType[]
+  nextDelay?: number
+  afterDelay?: number
+  deleteSpeed?: number
 }

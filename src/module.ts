@@ -21,6 +21,8 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
     await addComponentsDir({
+      prefix: _options.prefix,
+      global: _options.global,
       path: resolver.resolve('./runtime/components'),
     })
     addPlugin(resolver.resolve('./runtime/plugin'))
@@ -35,16 +37,15 @@ export default defineNuxtModule<ModuleOptions>({
         prefix: 'UP',
       })
     })
+    // _nuxt.options.css.push(resolver.resolve('./runtime/assets/styles.css'))
     // await installModule('@nuxtjs/tailwindcss', {
     //   exposeConfig: true,
     //   config: {
     //     darkMode: 'class',
     //     content: {
     //       files: [
-    //         './runtime/components/**/*.{vue,js,ts}',
-    //         './runtime/layouts/**/*.vue',
-    //         './runtime/pages/**/*.vue',
-    //         './runtime/app.vue',
+    //         resolver.resolve('./runtime/components/**/*.{vue,mjs,ts}'),
+    //         resolver.resolve('./runtime/*.{mjs,js,ts}'),
     //       ],
     //     },
     //   },

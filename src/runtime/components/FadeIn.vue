@@ -6,7 +6,6 @@ import type { FadeInType } from '../types'
 const domRef: Ref<HTMLElement | undefined> = ref()
 const isVisible: Ref<boolean> = ref(false)
 const observer: Ref<IntersectionObserver | undefined> = ref(undefined)
-
 const props = withDefaults(defineProps<FadeInType>(), {
   threshold: 0.3,
   repeat: false,

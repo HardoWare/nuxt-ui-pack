@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
-import type { FadeInType } from '../types'
+import type { FadeIn } from '../types'
 
 const domRef: Ref<HTMLElement | undefined> = ref()
 const isVisible: Ref<boolean> = ref(false)
 const observer: Ref<IntersectionObserver | undefined> = ref(undefined)
-const props = withDefaults(defineProps<FadeInType>(), {
+const props = withDefaults(defineProps<FadeIn>(), {
   threshold: 0.3,
   repeat: false,
   from: 'bottom',

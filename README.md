@@ -16,33 +16,40 @@ Find and replace all on all files (CMD+SHIFT+F):
 
 Custom ui components for Nuxt 3
 
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+- [📖 &nbsp;Documentation](/DOCS.md)
+
+[//]: # (- [✨ &nbsp;Release Notes]&#40;/CHANGELOG.md&#41;)
+[//]: # (- [🏀 Online playground]&#40;https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue&#41;)
 
 ## Features
 
-- ⛰ &nbsp;Fade In component
-- 🚠 &nbsp;Auto writer component
-- 🌲 &nbsp;Gallery with infinite scroll component
+- 😶‍🌫️ &nbsp;Fade In component
+- ✍🏻 &nbsp;Auto writer component
+- 📜 &nbsp;Infinite scroll component
 
 ## Quick Setup
 
 Install the module to your Nuxt application with one command:
 
 ```bash
-npx nuxi module add my-module
+npx nuxi module add nuxt-ui-pack
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+That's it! You can now use Ui Pack in your Nuxt app. Thanks!✨
+
+## Documentation
+
 
 
 ## Contribution
 
 <details>
   <summary>Local development</summary>
-  
+
   ```bash
+  # Copy git repo
+  git clone https://github.com/HardoWare/nuxt-ui-pack.git
+  
   # Install dependencies
   npm install
   

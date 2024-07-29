@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { WriteTextType } from '../src/runtime/types'
-import type { Return } from '~/types'
+import type { TextItem, Gallery } from '../src/runtime/types'
 
-const writeItems: WriteTextType[] = [
+const writeItems: TextItem[] = [
   { sentence: 'Four' },
   { sentence: 'Potato' },
   { sentence: 'longer text because why not?' },
 ]
 
-const apiCall = async (page: number): Promise<Return> => {
+const apiCall = async (page: number): Promise<Gallery> => {
   return await $fetch('/api/call', { query: { page: page } })
 }
 </script>
@@ -24,7 +23,7 @@ const apiCall = async (page: number): Promise<Return> => {
     </div>
     <div class="w-full bg-blue-400 py-10">
       <h1 class="text-4xl w-3/4 mx-auto">
-        FadeIn component
+        Fade in component
       </h1>
       <UPFadeIn class="w-fit mx-auto text-2xl">
         FadeIn made easy 🙌
@@ -35,29 +34,35 @@ const apiCall = async (page: number): Promise<Return> => {
         Text type component
       </h1>
       <div class="text-2xl w-3/4 mx-auto mt-4">
-        <UPTextTyper
+        <UPTextWriter
           :items="writeItems"
           :next-delay="50"
           class="bg-inherit"
         >
           One Two Three&nbsp;
-        </UPTextTyper>
+        </UPTextWriter>
       </div>
     </div>
     <div class="w-full py-10">
       <h1 class="text-4xl w-3/4 mx-auto">
         Infinity scroll component
       </h1>
-      <div class="w-3/4 mx-auto h-80 overflow-y-scroll mt-4">
+      <div class="w-3/4 mx-auto h-80 mt-4">
         <UPInfinityScroll
+          :ui="{ wrapper: 'q', body: { item: '12' } }"
           :api-call="apiCall"
-          class="text-white bg-gray-600 w-full h-full grid grid-cols-3 gap-1"
+          class="w-full h-full grid grid-cols-2 gap-4 overflow-y-scroll text-white bg-gray-600"
         >
           <template #default="{ item }">
-            <div class="h-8">
-              <h2 class="text-2xl">
+            <div class="h-20 w-full flex justify-center align-middle bg-gray-500">
+              <h2 class="text-2xl h-fit w-fit">
                 {{ item.id }} {{ item.name }}
               </h2>
+            </div>
+          </template>
+          <template #noItems>
+            <div>
+              <h2 class="text-2xl">No more items</h2>
             </div>
           </template>
         </UPInfinityScroll>

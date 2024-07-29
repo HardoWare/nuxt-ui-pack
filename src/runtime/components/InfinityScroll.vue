@@ -1,10 +1,21 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, reactive } from 'vue'
+import {onMounted, onBeforeUnmount, ref, reactive, computed} from 'vue'
 import type { Reactive, Ref } from 'vue'
 import type { Gallery } from '../types'
 
+interface UiT {
+  wrapper?: string
+  body?: {
+    wrapper?: string
+    item?: string
+    loading?: string
+    noItems?: string
+  }
+}
+
 const props = defineProps<{
-  apiCall: (page: number) => Promise<Gallery>
+  ui?: UiT
+  apiCall: (index: number) => Promise<Gallery>
 }>()
 const galleryRef: Ref<HTMLElement | null> = ref(null)
 const debounceTimer: Ref<number | undefined> = ref(undefined)
@@ -14,6 +25,11 @@ const page: Ref<number> = ref(0)
 const itemLoading: Ref<boolean> = ref(true)
 const items: Reactive<any[]> = reactive([])
 
+const uui = computed(() => ({
+  ...props.ui,
+}))
+
+console.log(uui.value)
 async function nextPage(): Promise<void> {
   itemLoading.value = true
   page.value += 1
@@ -60,16 +76,27 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="galleryRef" class="">
+  <div ref="galleryRef"
+       v-bind="$attrs"
+       :class="[ui?.wrapper]"
+  >
     <div
-      v-for="item in items"
-      :key="item"
-      class=""
+      v-for="(item, index) in items"
+      :key="index"
+      :class="[ui.body?.item]"
     >
-      <slot :item="item" />
+      <slot :item="item"
+            class="111"
+      >
+        <div>
+          {{ index }}
+        </div>
+      </slot>
     </div>
   </div>
-  <div v-if="noMoreItems">
+  <div v-if="noMoreItems"
+       :class="[ui.body?.noItems]"
+  >
     <slot name="noItems">
       <div class="text-center text-gray-500">
         No items

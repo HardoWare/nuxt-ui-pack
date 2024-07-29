@@ -1,4 +1,4 @@
 export interface Gallery {
-  data: any[]
+  data: unknown[]
   noMore: boolean
 }

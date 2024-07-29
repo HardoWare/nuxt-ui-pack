@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import type { WriteTextType, TextTyperType } from '../types'
+import type { TextItem, TextWriter } from '../types'
 
 const textRef = ref()
 const colorRef = ref()
@@ -11,13 +11,13 @@ const defaultAfterDelay: number = 3000
 const defaultDeleteSpeed: number = 50
 const defaultColor: string = 'text-inherit'
 const carouselInterval: Ref<boolean> = ref(true)
-const props = withDefaults(defineProps<TextTyperType>(), {
-  items: () => [] as WriteTextType[],
-  nextDelay: defaultNextDelay,
-  afterDelay: defaultAfterDelay,
-  deleteSpeed: defaultDeleteSpeed,
+const props = withDefaults(defineProps<TextWriter>(), {
+  items: () => [] as TextItem[],
+  nextDelay: defaultNextDelay, // 500ms
+  afterDelay: defaultAfterDelay, // 3000ms
+  deleteSpeed: defaultDeleteSpeed, // 50ms
 })
-const applyDefaults = (): WriteTextType[] => {
+const applyDefaults = (): TextItem[] => {
   return props.items.map(item => ({
     sentence: item.sentence,
     speed: item.speed ?? defaultTypeSpeed,

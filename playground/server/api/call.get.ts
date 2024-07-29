@@ -1,11 +1,10 @@
-import type { Return } from '~/types'
+import type { Gallery } from '../../../src/runtime/types'
 
-export default defineEventHandler(async (e): Promise<Return> => {
+export default defineEventHandler(async (e): Promise<Gallery> => {
   const { page }: { page: number } = getQuery(e)
   let noMore: boolean = false
-  if (page > 4) {
+  if (page > 4)
     noMore = true
-  }
   const data = [
     { id: 1, name: 'John Doe' },
     { id: 2, name: 'Jane Doe' },

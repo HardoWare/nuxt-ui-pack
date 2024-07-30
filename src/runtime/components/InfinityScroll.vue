@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import {onMounted, onBeforeUnmount, ref, reactive, computed} from 'vue'
+import { onMounted, onBeforeUnmount, ref, reactive, computed } from 'vue'
 import type { Reactive, Ref } from 'vue'
-import type { Gallery } from '../types'
+import type { GalleryResponse, GalleryUi } from '../types'
 
-interface UiT {
-  wrapper?: string
-  body?: {
-    wrapper?: string
-    item?: string
-    loading?: string
-    noItems?: string
-  }
+const uiDef = {
+  wrapper: 'w-full max-h-96',
+  body: {
+    wrapper: 'grid grid-cols-2 gap-2',
+    item: 'w-full',
+    loading: 'w-full col-span-2 text-center',
+    noItems: 'w-full text-center',
+  },
 }
 
 const props = defineProps<{
-  ui?: UiT
-  apiCall: (index: number) => Promise<Gallery>
+  ui?: GalleryUi
+  apiCall: (index: number) => Promise<GalleryResponse<unknown>>
 }>()
+
 const galleryRef: Ref<HTMLElement | null> = ref(null)
 const debounceTimer: Ref<number | undefined> = ref(undefined)
 const noMoreItems: Ref<boolean> = ref(false)
@@ -25,22 +26,21 @@ const page: Ref<number> = ref(0)
 const itemLoading: Ref<boolean> = ref(true)
 const items: Reactive<any[]> = reactive([])
 
-const uui = computed(() => ({
-  ...props.ui,
+const ui = computed(() => ({
+  ...{ ...uiDef, ...props.ui },
+  ...{ body: { ...uiDef.body, ...props.ui?.body } },
 }))
-
-console.log(uui.value)
 async function nextPage(): Promise<void> {
   itemLoading.value = true
   page.value += 1
   const { data, noMore } = await props.apiCall(page.value)
+  // await new Promise(resolve => setTimeout(resolve, 5000))
   if (!noMore)
     items.push(...data)
   else {
     noMoreItems.value = true
     page.value -= 1
   }
-  await new Promise(resolve => setTimeout(resolve, 3000))
   itemLoading.value = false
 }
 
@@ -76,38 +76,33 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="galleryRef"
-       v-bind="$attrs"
-       :class="[ui?.wrapper]"
-  >
-    <div
-      v-for="(item, index) in items"
-      :key="index"
-      :class="[ui.body?.item]"
-    >
-      <slot :item="item"
-            class="111"
-      >
-        <div>
-          {{ index }}
+  <div v-bind="$attrs">
+    <div :class="[ui.wrapper]">
+      <div ref="galleryRef" :class="[ui.body.wrapper]">
+        <div v-for="(item, index) in items" :key="index" :class="[ui.body.item]">
+          <slot name="default" :item="item">
+            <div>
+              item {{ index }}
+            </div>
+          </slot>
         </div>
-      </slot>
+        <div v-if="itemLoading" :class="[ui.body.loading]">
+          <slot name="loading">
+            <div>
+              <h3 class="w-full text-center">Loading...</h3>
+            </div>
+          </slot>
+        </div>
+      </div>
+      <div v-if="noMoreItems" :class="[ui.body.noItems]">
+        <slot name="noItems">
+          <div class="text-center text-gray-500 w-full">
+            <h3 class="text-2xl">No more items</h3>
+          </div>
+        </slot>
+      </div>
     </div>
   </div>
-  <div v-if="noMoreItems"
-       :class="[ui.body?.noItems]"
-  >
-    <slot name="noItems">
-      <div class="text-center text-gray-500">
-        No items
-      </div>
-    </slot>
-  </div>
-  <button class="mx-auto block mt-4"
-          @click="nextPage()"
-  >
-    LOAD MORE
-  </button>
 </template>
 
 <style scoped>

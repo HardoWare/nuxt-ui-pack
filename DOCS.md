@@ -1,8 +1,8 @@
 # Documentation
 ## Featuring:
-- [Fade in component](/)
-- [Infinite scroll component]()
-- [Text writers component]()
+- [Fade in component](#fade-in)
+- [Infinite scroll component](#infinite-scroll)
+- [Text writers component](#text-writer)
 
 
 ## Fade In
@@ -42,19 +42,20 @@ type FadeIn = {
 ## Infinite scroll
 ### Usage
 
-#### You have to provide apiCall method with query parameters of your api evenHandler
+#### You have to provide apiCall method with query parameters of your api evenHandler Import GalleryResponse with your Type
 ```ts
-const apiCall = async (page: number): Promise<Gallery> => {
+const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems>> => {
   return await $fetch('/api/call', { query: { page: page } })
 }
 ```
 
-#### you can template items with #default slot
+#### You can template items, loading, noMore with slots
+If default classes in component are not applied, do so in <strong style="color:yellow">:ui</strong> prop.
 ```vue
-<UPInfinityScroll :apiCall="apiCall">
+<UPInfinityScroll :ui="{ body: { wrapper: 'grid grid-cols-2 gap-2' } }" :api-call="apiCall" class="w-3/4 mx-auto mt-4 text-white bg-gray-600 overflow-hidden">
   <template #default="{ item }">
-    <div class="h-8">
-      <h2 class="text-2xl">
+    <div class="h-32 flex justify-center align-middle bg-gray-500">
+      <h2 class="text-2xl h-fit w-fit">
         {{ item.id }} {{ item.name }}
       </h2>
     </div>
@@ -64,13 +65,12 @@ const apiCall = async (page: number): Promise<Gallery> => {
 ```
 #### Example api eventHandler
 ```ts
-export default defineEventHandler(async (e): Promise<Gallery> => {
+export default defineEventHandler(async (e): Promise<GalleryResponse<ExampleItems>> => {
   const { page }: { page: number } = getQuery(e)
   let noMore: boolean = false
-  if (page > 4) {
+  if (page > 6)
     noMore = true
-  }
-  const data = [
+  const data: ExampleItems[] = [
     { id: 1, name: 'John Doe' },
     { id: 2, name: 'Jane Doe' },
     { id: 3, name: 'John Smith' },
@@ -83,15 +83,26 @@ export default defineEventHandler(async (e): Promise<Gallery> => {
 ### Default
 ```ts
 const props = defineProps<{
-  apiCall: (page: number) => Promise<Gallery> // 
+  ui?: GalleryUi
+  apiCall: (index: number) => Promise<GalleryResponse<unknown>>
 }>()
 ```
 
 ### Props
 ```ts
-interface Gallery {
-  data: any[]       // any data array
-  noMore: boolean   // define if there is no more data to be returned
+interface GalleryResponse<T> {
+  data: T[]             // provide item type, output is always array
+  noMore: boolean
+}
+
+interface GalleryUi {
+  wrapper?: string
+  body?: {
+    wrapper?: string
+    item?: string
+    loading?: string
+    noItems?: string
+  }
 }
 ```
 

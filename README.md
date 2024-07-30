@@ -14,7 +14,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-Custom ui components for Nuxt 3
+### Custom UI components for Nuxt 3
 
 - [📖 &nbsp;Documentation](/DOCS.md)
 
@@ -24,8 +24,10 @@ Custom ui components for Nuxt 3
 ## Features
 
 - 😶‍🌫️ &nbsp;Fade In component
-- ✍🏻 &nbsp;Auto writer component
 - 📜 &nbsp;Infinite scroll component
+- ✍🏻 &nbsp;Auto writer component
+
+Components require minimal configuration.
 
 ## Quick Setup
 
@@ -36,10 +38,6 @@ npx nuxi module add nuxt-ui-pack
 ```
 
 That's it! You can now use Ui Pack in your Nuxt app. Thanks!✨
-
-## Documentation
-
-
 
 ## Contribution
 
@@ -74,7 +72,6 @@ That's it! You can now use Ui Pack in your Nuxt app. Thanks!✨
   ```
 
 </details>
-
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=020420&colorB=00DC82

@@ -146,8 +146,3 @@ interface TextItem {
   color?: string        // color class
 }
 ```
-
-
-<span style="color:brown">
-Text content
-</span>

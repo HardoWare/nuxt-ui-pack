@@ -2,7 +2,10 @@
   "name": "nuxt-ui-pack",
   "version": "1.0.0",
   "description": "Unique ui components for nuxt 3",
-  "repository": "HardoWare/nuxt-ui-pack",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HardoWare/nuxt-ui-pack.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {

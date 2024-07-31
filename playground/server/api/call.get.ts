@@ -3,7 +3,7 @@ import type { GalleryResponse, ExampleItems } from '../../../src/runtime/types'
 export default defineEventHandler(async (e): Promise<GalleryResponse<ExampleItems>> => {
   const { page }: { page: number } = getQuery(e)
   let noMore: boolean = false
-  if (page > 6)
+  if (page > 3)
     noMore = true
   const data: ExampleItems[] = [
     { id: 1, name: 'John Doe' },

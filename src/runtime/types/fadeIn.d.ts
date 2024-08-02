@@ -1,6 +1,8 @@
-export type FadeIn = {
+export type FadeFrom = 'top' | 'bottom' | 'left' | 'right' | 'center'
+
+export interface FadeIn {
   threshold?: number | string
-  from?: 'top' | 'bottom' | 'left' | 'right' | 'center'
+  from?: FadeFrom
   depth?: number | string
   repeat?: true | false
 }

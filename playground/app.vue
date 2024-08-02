@@ -30,7 +30,12 @@ const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems>> => 
       </UPFadeIn>
     </div>
     <div class="w-full bg-blue-400 py-10">
-      <UPFadeIn from="left" depth="10" repeat class="w-fit mx-auto text-2xl">
+      <UPFadeIn
+        from="left"
+        depth="10"
+        repeat
+        class="w-fit mx-auto text-2xl"
+      >
         Fade in component with repeat prop and left direction
       </UPFadeIn>
     </div>
@@ -52,7 +57,11 @@ const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems>> => 
       <h1 class="text-4xl w-3/4 mx-auto">
         Infinity scroll component
       </h1>
-      <UPInfinityScroll :ui="{ body: { wrapper: 'grid grid-cols-2 gap-2' } }" :api-call="apiCall" class="w-3/4 mx-auto mt-4 text-white bg-gray-600 overflow-hidden">
+      <UPInfinityScroll
+        :ui="{ body: { wrapper: 'grid grid-cols-2 gap-2' } }"
+        :api-call="apiCall"
+        class="w-3/4 mx-auto mt-4 text-white bg-gray-600 overflow-hidden"
+      >
         <template #default="{ item }">
           <div class="h-32 flex justify-center align-middle bg-gray-500">
             <h2 class="text-2xl h-fit w-fit">
@@ -66,9 +75,13 @@ const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems>> => 
       <h1 class="text-4xl w-3/4 mx-auto">
         Infinity scroll component with FadeIn
       </h1>
-      <UPInfinityScroll :ui="{ body: { wrapper: 'grid grid-cols-2 gap-2' } }" :api-call="apiCall" class="w-3/4 mx-auto mt-4 text-white bg-gray-600 overflow-hidden">
+      <UPInfinityScroll
+        :ui="{ body: { wrapper: 'grid grid-cols-2 gap-2' } }"
+        :api-call="apiCall"
+        class="w-3/4 mx-auto mt-4 text-white  overflow-hidden"
+      >
         <template #default="{ item }">
-          <UPFadeIn>
+          <UPFadeIn from="left">
             <div class="h-32 flex justify-center align-middle bg-gray-500">
               <h2 class="text-2xl h-fit w-fit">
                 {{ item.id }} {{ item.name }}

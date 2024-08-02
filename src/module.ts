@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addComponentsDir } from '@nuxt/kit'
+import {defineNuxtModule, createResolver, addComponentsDir, installModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
   prefix: string
@@ -21,34 +21,30 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
     await addComponentsDir({
-      prefix: _options.prefix,
       global: _options.global,
+      isAsync: true,
       path: resolver.resolve('./runtime/components'),
+      prefix: _options.prefix,
+      watch: true,
     })
-    addPlugin(resolver.resolve('./runtime/plugin'))
-    // addTemplate({
-    //   filename: resolver.resolve('./runtime/types'),
-    //   src: resolver.resolve('./runtime/'),
-    //   getContents: () => {},
-    // })
     _nuxt.hook('components:dirs', (dirs) => {
       dirs.push({
         path: resolver.resolve('./runtime/components'),
         prefix: 'UP',
       })
     })
-    // _nuxt.options.css.push(resolver.resolve('./runtime/assets/styles.css'))
-    // await installModule('@nuxtjs/tailwindcss', {
-    //   exposeConfig: true,
-    //   config: {
-    //     darkMode: 'class',
-    //     content: {
-    //       files: [
-    //         resolver.resolve('./runtime/components/**/*.{vue,mjs,ts}'),
-    //         resolver.resolve('./runtime/*.{mjs,js,ts}'),
-    //       ],
-    //     },
-    //   },
-    // })
+    await installModule('@nuxtjs/tailwindcss', {
+      configPath: resolver.resolve('./runtime', 'tailwind.config'),
+      exposeConfig: true,
+      config: {
+        darkMode: 'class',
+        content: {
+          files: [
+            resolver.resolve('./runtime/components/**/*.{vue,mjs,ts}'),
+            resolver.resolve('./runtime/*.{mjs,js,ts}'),
+          ],
+        },
+      },
+    })
   },
 })

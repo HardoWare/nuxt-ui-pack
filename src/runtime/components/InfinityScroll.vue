@@ -22,9 +22,8 @@ const galleryRef: Ref<HTMLElement | null> = ref(null)
 const debounceTimer: Ref<number | undefined> = ref(undefined)
 const noMoreItems: Ref<boolean> = ref(false)
 const page: Ref<number> = ref(0)
-
 const itemLoading: Ref<boolean> = ref(true)
-const items: Reactive<any[]> = reactive([])
+const items: Reactive<any[]> = reactive([]) // todo define type of items
 
 const ui = computed(() => ({
   ...{ ...uiDef, ...props.ui },
@@ -34,7 +33,6 @@ async function nextPage(): Promise<void> {
   itemLoading.value = true
   page.value += 1
   const { data, noMore } = await props.apiCall(page.value)
-  // await new Promise(resolve => setTimeout(resolve, 5000))
   if (!noMore)
     items.push(...data)
   else {
@@ -78,26 +76,46 @@ onBeforeUnmount(() => {
 <template>
   <div v-bind="$attrs">
     <div :class="[ui.wrapper]">
-      <div ref="galleryRef" :class="[ui.body.wrapper]">
-        <div v-for="(item, index) in items" :key="index" :class="[ui.body.item]">
-          <slot name="default" :item="item">
+      <div
+        ref="galleryRef"
+        :class="[ui.body.wrapper]"
+      >
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          :class="[ui.body.item]"
+        >
+          <slot
+            name="default"
+            :item="item"
+          >
             <div>
               item {{ index }}
             </div>
           </slot>
         </div>
-        <div v-if="itemLoading" :class="[ui.body.loading]">
+        <div
+          v-if="itemLoading"
+          :class="[ui.body.loading]"
+        >
           <slot name="loading">
             <div>
-              <h3 class="w-full text-center">Loading...</h3>
+              <h3 class="w-full text-center">
+                Loading...
+              </h3>
             </div>
           </slot>
         </div>
       </div>
-      <div v-if="noMoreItems" :class="[ui.body.noItems]">
+      <div
+        v-if="noMoreItems"
+        :class="[ui.body.noItems]"
+      >
         <slot name="noItems">
           <div class="text-center text-gray-500 w-full">
-            <h3 class="text-2xl">No more items</h3>
+            <h3 class="text-2xl">
+              No more items
+            </h3>
           </div>
         </slot>
       </div>

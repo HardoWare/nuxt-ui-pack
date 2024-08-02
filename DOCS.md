@@ -31,9 +31,11 @@ const props = withDefaults(defineProps<FadeIn>(), {
 
 ### Props
 ```ts
-type FadeIn = {
+type FadeFrom = 'top' | 'bottom' | 'left' | 'right' | 'center'
+
+interface FadeIn {
   threshold?: number | string
-  from?: 'top' | 'bottom' | 'left' | 'right' | 'center'
+  from?: FadeFrom
   depth?: number | string
   repeat?: true | false
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import type { TextItem, TextWriter } from '../types'
+import type { TextItem } from '../types'
 
 const textRef = ref()
 const colorRef = ref()
@@ -11,7 +11,12 @@ const defaultAfterDelay: number = 3000
 const defaultDeleteSpeed: number = 50
 const defaultColor: string = 'text-inherit'
 const carouselInterval: Ref<boolean> = ref(true)
-const props = withDefaults(defineProps<TextWriter>(), {
+const props = withDefaults(defineProps<{
+  items: TextItem[]
+  nextDelay?: number
+  afterDelay?: number
+  deleteSpeed?: number
+}>(), {
   items: () => [] as TextItem[],
   nextDelay: defaultNextDelay, // 500ms
   afterDelay: defaultAfterDelay, // 3000ms
@@ -75,8 +80,9 @@ onBeforeUnmount(() => {
         ref="textRef"
         :class="[colorRef]"
       />
-      <span class="blink inline-block w-0.25 h-full ml-1"
-            style="background-color: currentColor; "
+      <span
+        class="blink inline-block w-0.25 h-full ml-1"
+        style="background-color: currentColor;"
       >&nbsp;</span>
     </div>
   </div>

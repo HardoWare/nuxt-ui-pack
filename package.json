@@ -1,7 +1,7 @@
 {
   "name": "nuxt-ui-pack",
-  "version": "1.0.2",
-  "description": "Unique ui components for nuxt 3",
+  "version": "1.0.3",
+  "description": "Lightweight ui components for Nuxt 3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HardoWare/nuxt-ui-pack.git"
@@ -29,7 +29,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "link": "npm link"
   },
   "dependencies": {
     "@nuxt/kit": "^3.12.4",

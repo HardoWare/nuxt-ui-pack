@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
-import type { FadeFrom } from "../types";
+import type { FadeFrom } from '../types'
 
 const domRef: Ref<HTMLElement | undefined> = ref()
 const isVisible: Ref<boolean> = ref(false)

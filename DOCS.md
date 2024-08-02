@@ -45,9 +45,20 @@ interface FadeIn {
 ### Usage
 
 #### You have to provide apiCall method with query parameters of your api evenHandler Import GalleryResponse with your Type
+
 ```ts
 const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems>> => {
+  await new Promise(resolve => setTimeout(resolve, 2000)) // delay to show the gallery response
   return await $fetch('/api/call', { query: { page: page } })
+}
+```
+
+#### If you are not using self-made api, you have to prepack the response
+
+```ts
+const api = async (): Promise<GalleryResponse<unknown>> => {
+  const r = await $fetch('https://jsonplaceholder.typicode.com/posts/1')
+  return  { data: r }
 }
 ```
 

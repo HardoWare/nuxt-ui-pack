@@ -1,6 +1,6 @@
 export interface GalleryResponse<T> {
-  data: T[]
-  noMore: boolean
+  data?: T
+  noMore?: boolean
 }
 
 export interface ExampleItems {

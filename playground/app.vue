@@ -7,7 +7,8 @@ const writeItems: TextItem[] = [
   { sentence: 'longer text because why not?' },
 ]
 
-const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems>> => {
+const apiCall = async (page: number): Promise<GalleryResponse<ExampleItems[]>> => {
+  await new Promise(resolve => setTimeout(resolve, 2000)) // delay to show the gallery response
   return await $fetch('/api/call', { query: { page: page } })
 }
 </script>

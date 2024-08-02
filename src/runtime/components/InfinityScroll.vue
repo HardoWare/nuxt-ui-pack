@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, reactive, computed } from 'vue'
 import type { Reactive, Ref } from 'vue'
+import { isObjectNotArray } from '@typescript-eslint/utils/eslint-utils'
 import type { GalleryResponse, GalleryUi } from '../types'
 
 const uiDef = {
@@ -12,30 +13,35 @@ const uiDef = {
     noItems: 'w-full text-center',
   },
 }
-
 const props = defineProps<{
   ui?: GalleryUi
-  apiCall: (index: number) => Promise<GalleryResponse<unknown>>
+  apiCall: (index: number) => Promise<GalleryResponse<unknown[]>>
 }>()
-
 const galleryRef: Ref<HTMLElement | null> = ref(null)
 const debounceTimer: Ref<number | undefined> = ref(undefined)
 const noMoreItems: Ref<boolean> = ref(false)
 const page: Ref<number> = ref(0)
 const itemLoading: Ref<boolean> = ref(true)
-const items: Reactive<any[]> = reactive([]) // todo define type of items
+const items: Reactive<NonNullable<unknown>[]> = reactive([])
 
 const ui = computed(() => ({
   ...{ ...uiDef, ...props.ui },
   ...{ body: { ...uiDef.body, ...props.ui?.body } },
 }))
+
+// const ee = deepMerge(uiDef, props.ui) // todo validate is object or array
 async function nextPage(): Promise<void> {
   itemLoading.value = true
   page.value += 1
+  console.log(typeof props.apiCall)
   const { data, noMore } = await props.apiCall(page.value)
-  if (!noMore)
-    items.push(...data)
+  if (isObjectNotArray(data)) {
+    items.push(data as NonNullable<unknown>[])
+  }
   else {
+    items.push(...data as NonNullable<unknown>[]) // todo validate is object or array
+  }
+  if (noMore) {
     noMoreItems.value = true
     page.value -= 1
   }
